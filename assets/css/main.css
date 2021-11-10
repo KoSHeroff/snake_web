@@ -1,0 +1,32 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #6f6f6f;
+}
+
+input {
+    width: 0;
+    height: 0;
+    border: none;
+}
+
+.field {
+    margin: auto;
+}
+
+.block {
+    float: left;
+    width: 10px;
+    height: 10px;
+    background-color: #c29292;
+    margin: 2px;
+    border-radius: 2px;
+}
+
+.wall {
+    background-color: #222222;
+}
