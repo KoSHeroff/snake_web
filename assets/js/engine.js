@@ -1,6 +1,6 @@
 // variables
-const amountBlocks = 41;
-var active = 'stop';
+const amountBlocks = 51;
+var active = 'stop', action = 'stop', oldActive;
 var directions = { left: { x: -1, y: 0 }, right: { x: 1, y: 0 }, up: { x: 0, y: -1 }, down: { x: 0, y: 1 } };
 
 
@@ -24,10 +24,28 @@ function settingsGame(size) {
     gameLogic();
 
     function gameLogic() {
+        action = active;
+        switch(action) {
+            case 'left':
+                if(oldActive == 'right') action = oldActive;
+                break;
+            case 'up':
+                if(oldActive == 'down') action = oldActive;
+                break;
+            case 'right':
+                if(oldActive == 'left') action = oldActive;
+                break;
+            case 'down':
+                if(oldActive == 'up') action = oldActive;
+                break;
+        }
+        oldActive = action;
+
         if(active == 'stop') {
             frame(intervalTime);
             return
         }
+        
         if(snake.some((e, index) => e.x == snake[0].x && e.y == snake[0].y && index != 0)) {
             gameOwer(score);
             return;
@@ -39,7 +57,7 @@ function settingsGame(size) {
 
         if(snake[0].x == fruit.x && snake[0].y == fruit.y) {
             score += 1;
-            intervalTime = intervalTime / (intervalTime / (amountBlocks*amountBlocks));
+            intervalTime = intervalTime / 1.001;
             fruit = creatElem(snake);
             drawItem('fruit', fruit.x, fruit.y);
             snake.push({ x: 2, y: 2 });
@@ -56,8 +74,8 @@ function settingsGame(size) {
             }
         }
 
-        snake[0].x += directions[active].x;
-        snake[0].y += directions[active].y;
+        snake[0].x += directions[action].x;
+        snake[0].y += directions[action].y;
         drawItem('head', snake[0].x, snake[0].y);
 
         frame(intervalTime);
@@ -139,7 +157,7 @@ function generateField(amount) {
 }
 
 function snakeControls(click) {
-    console.log(click);
+    //console.log(click);
     switch(click.keyCode) {
         case 37:
             if(active != 'right') active = 'left';
