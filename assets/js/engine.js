@@ -29,19 +29,17 @@ function settingsGame(size) {
             return
         }
         if(snake.some((e, index) => e.x == snake[0].x && e.y == snake[0].y && index != 0)) {
-            drawItem('tail', snake[0].x, snake[0].y);
             gameOwer(score);
             return;
         }
         if(snake[0].x == 1 || snake[0].x == 41 || snake[0].y == 0 || snake[0].y == 40) {
-            drawItem('wall', snake[0].x, snake[0].y);
             gameOwer(score);
             return;
         }
 
         if(snake[0].x == fruit.x && snake[0].y == fruit.y) {
             score += 1;
-            intervalTime = intervalTime / 1.015;
+            intervalTime = intervalTime / (intervalTime / (amountBlocks*amountBlocks));
             fruit = creatElem(snake);
             drawItem('fruit', fruit.x, fruit.y);
             snake.push({ x: 2, y: 2 });
